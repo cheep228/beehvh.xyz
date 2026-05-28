@@ -1,0 +1,883 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>BeeHvH - Minecraft сервер</title>
+  <meta name="description" content="BeeHvH - Minecraft сервер с PvP, выживанием, событиями и быстрым стартом для игроков.">
+  <meta name="keywords" content="BeeHvH, minecraft, minecraft сервер, pvp сервер, h vh, майнкрафт сервер">
+  <meta name="theme-color" content="#ffd84d">
+  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="10" fill="%23151310"/%3E%3Cpath d="M14 27h8v-7h9v7h11v-6h8v10h6v12h-8v8H24v-7H14z" fill="%23f9d84e"/%3E%3Cpath d="M22 20h9v7h-9zm20 1h8v10h-8zM24 44h24v7H24z" fill="%237b4b2b"/%3E%3Cpath d="M14 27h8v17h-8zm17 0h11v17H31z" fill="%23ffe879"/%3E%3Cpath d="M8 31h8v10H8zm36-2h8v8h-8z" fill="%23201d1a"/%3E%3Cpath d="M48 31h8v8h-8zm-6 8h8v8h-8z" fill="%23fff8cf"/%3E%3C/svg%3E'>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #12100d;
+      --bg-soft: #191610;
+      --panel: #211d16;
+      --panel-2: #fff8d8;
+      --ink: #fff8dc;
+      --muted: #c7bfa5;
+      --text-dark: #201c15;
+      --yellow: #ffd84d;
+      --yellow-strong: #f6c839;
+      --yellow-soft: #fff1a8;
+      --green: #5de08b;
+      --sky: #67d8ff;
+      --line: rgba(255, 248, 220, .14);
+      --shadow: 0 24px 80px rgba(0, 0, 0, .34);
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-width: 320px;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background:
+        radial-gradient(circle at 20% 18%, rgba(255, 216, 77, .16), transparent 32rem),
+        linear-gradient(180deg, #15120e 0%, #0f0e0c 55%, #17130d 100%);
+      color: var(--ink);
+      font-family: Inter, "Segoe UI", Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.5;
+      letter-spacing: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img,
+    svg {
+      display: block;
+    }
+
+    .page {
+      overflow: hidden;
+      min-height: 100vh;
+    }
+
+    .wrap {
+      width: min(1180px, calc(100% - 40px));
+      margin: 0 auto;
+    }
+
+    .site-header {
+      position: sticky;
+      top: 0;
+      z-index: 20;
+      border-bottom: 1px solid var(--line);
+      background: rgba(18, 16, 13, .86);
+      backdrop-filter: blur(18px);
+    }
+
+    .header-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+      min-height: 82px;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      font-weight: 900;
+      font-size: 24px;
+      line-height: 1;
+    }
+
+    .brand-mark {
+      width: 54px;
+      height: 54px;
+      filter: drop-shadow(0 12px 20px rgba(255, 216, 77, .26));
+    }
+
+    .brand small {
+      display: block;
+      margin-top: 4px;
+      color: var(--yellow);
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-weight: 800;
+    }
+
+    .nav a {
+      padding: 10px 12px;
+      border-radius: 8px;
+    }
+
+    .nav a:hover {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .07);
+    }
+
+    .copy-btn,
+    .primary-btn,
+    .ghost-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      min-height: 48px;
+      padding: 0 18px;
+      border: 0;
+      border-radius: 8px;
+      color: #1c1608;
+      background: var(--yellow);
+      box-shadow: 0 12px 30px rgba(255, 216, 77, .24);
+      font: inherit;
+      font-weight: 900;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease;
+    }
+
+    .copy-btn:hover,
+    .primary-btn:hover {
+      transform: translateY(-2px);
+      background: var(--yellow-soft);
+      box-shadow: 0 16px 34px rgba(255, 216, 77, .32);
+    }
+
+    .ghost-btn {
+      color: var(--ink);
+      background: rgba(255, 255, 255, .08);
+      box-shadow: none;
+    }
+
+    .ghost-btn:hover {
+      transform: translateY(-2px);
+      background: rgba(255, 255, 255, .12);
+    }
+
+    .button-icon {
+      width: 18px;
+      height: 18px;
+      flex: 0 0 18px;
+    }
+
+    .hero {
+      position: relative;
+      min-height: 680px;
+      padding: 84px 0 64px;
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      z-index: -2;
+      background-image:
+        linear-gradient(rgba(255, 255, 255, .035) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255, 255, 255, .035) 1px, transparent 1px);
+      background-size: 42px 42px;
+      mask-image: linear-gradient(180deg, black, transparent 82%);
+    }
+
+    .hero-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 1.04fr) minmax(320px, .72fr);
+      align-items: center;
+      gap: 54px;
+    }
+
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 18px;
+      padding: 8px 10px;
+      border: 1px solid rgba(255, 216, 77, .28);
+      border-radius: 8px;
+      color: var(--yellow-soft);
+      background: rgba(255, 216, 77, .08);
+      font-size: 13px;
+      font-weight: 900;
+      text-transform: uppercase;
+    }
+
+    .pulse {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--green);
+      box-shadow: 0 0 0 7px rgba(93, 224, 139, .14);
+    }
+
+    h1,
+    h2,
+    h3,
+    p {
+      margin-top: 0;
+    }
+
+    h1 {
+      max-width: 720px;
+      margin-bottom: 20px;
+      font-size: 66px;
+      line-height: .96;
+      letter-spacing: 0;
+    }
+
+    .lead {
+      max-width: 620px;
+      margin-bottom: 30px;
+      color: var(--muted);
+      font-size: 20px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 34px;
+    }
+
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
+      max-width: 680px;
+    }
+
+    .stat {
+      min-height: 102px;
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .055);
+    }
+
+    .stat strong {
+      display: block;
+      color: var(--yellow);
+      font-size: 27px;
+      line-height: 1;
+    }
+
+    .stat span {
+      display: block;
+      margin-top: 8px;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .server-panel {
+      position: relative;
+      min-height: 470px;
+      padding: 28px;
+      border: 1px solid rgba(255, 216, 77, .22);
+      border-radius: 8px;
+      background:
+        linear-gradient(160deg, rgba(255, 216, 77, .16), transparent 42%),
+        linear-gradient(180deg, rgba(255, 255, 255, .09), rgba(255, 255, 255, .04));
+      box-shadow: var(--shadow);
+    }
+
+    .server-panel::after {
+      content: "";
+      position: absolute;
+      right: -40px;
+      bottom: -44px;
+      width: 190px;
+      height: 190px;
+      background:
+        linear-gradient(45deg, transparent 0 36%, rgba(255, 216, 77, .26) 36% 64%, transparent 64%),
+        linear-gradient(-45deg, transparent 0 36%, rgba(103, 216, 255, .14) 36% 64%, transparent 64%);
+      opacity: .78;
+      transform: rotate(8deg);
+    }
+
+    .panel-bee {
+      width: min(280px, 100%);
+      margin: 4px auto 28px;
+      image-rendering: pixelated;
+      filter: drop-shadow(0 26px 30px rgba(0, 0, 0, .34));
+    }
+
+    .server-name {
+      display: flex;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 20px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .server-name h2 {
+      margin-bottom: 4px;
+      font-size: 26px;
+    }
+
+    .server-name p {
+      margin-bottom: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .online-badge {
+      flex: 0 0 auto;
+      align-self: start;
+      padding: 8px 10px;
+      border-radius: 8px;
+      color: #092011;
+      background: var(--green);
+      font-weight: 900;
+    }
+
+    .ip-box {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .ip-label {
+      color: var(--muted);
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+    }
+
+    .ip-value {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 58px;
+      padding: 10px 10px 10px 16px;
+      border: 1px solid rgba(255, 216, 77, .24);
+      border-radius: 8px;
+      background: rgba(0, 0, 0, .22);
+      color: var(--yellow-soft);
+      font-size: 20px;
+      font-weight: 900;
+      word-break: break-word;
+    }
+
+    .panel-note {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .section {
+      padding: 72px 0;
+    }
+
+    .section-title {
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 28px;
+      margin-bottom: 28px;
+    }
+
+    .section-title h2 {
+      margin-bottom: 0;
+      color: var(--ink);
+      font-size: 40px;
+      line-height: 1.05;
+    }
+
+    .section-title p {
+      max-width: 430px;
+      margin-bottom: 0;
+      color: var(--muted);
+      font-weight: 700;
+    }
+
+    .modes {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .mode {
+      min-height: 210px;
+      padding: 22px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .055);
+    }
+
+    .mode-icon {
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      margin-bottom: 18px;
+      border-radius: 8px;
+      color: var(--text-dark);
+      background: var(--yellow);
+    }
+
+    .mode-icon svg {
+      width: 24px;
+      height: 24px;
+    }
+
+    .mode h3 {
+      margin-bottom: 10px;
+      font-size: 20px;
+    }
+
+    .mode p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .join {
+      background:
+        linear-gradient(180deg, rgba(255, 216, 77, .11), rgba(255, 216, 77, .03)),
+        var(--bg-soft);
+    }
+
+    .join-grid {
+      display: grid;
+      grid-template-columns: .95fr 1.05fr;
+      gap: 34px;
+      align-items: start;
+    }
+
+    .steps {
+      display: grid;
+      gap: 12px;
+      counter-reset: step;
+    }
+
+    .step {
+      display: grid;
+      grid-template-columns: 48px 1fr;
+      gap: 16px;
+      align-items: center;
+      min-height: 82px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .055);
+      counter-increment: step;
+    }
+
+    .step::before {
+      content: counter(step);
+      display: grid;
+      place-items: center;
+      width: 48px;
+      height: 48px;
+      border-radius: 8px;
+      color: var(--text-dark);
+      background: var(--yellow);
+      font-weight: 900;
+    }
+
+    .step h3 {
+      margin-bottom: 2px;
+      font-size: 18px;
+    }
+
+    .step p {
+      margin-bottom: 0;
+      color: var(--muted);
+    }
+
+    .notice {
+      min-height: 250px;
+      padding: 26px;
+      border: 1px solid rgba(255, 216, 77, .28);
+      border-radius: 8px;
+      background: var(--panel-2);
+      color: var(--text-dark);
+    }
+
+    .notice h2 {
+      margin-bottom: 12px;
+      font-size: 32px;
+      line-height: 1.1;
+    }
+
+    .notice p {
+      color: #4b4435;
+      font-weight: 700;
+    }
+
+    .notice .copy-btn {
+      margin-top: 6px;
+      color: var(--text-dark);
+      background: var(--yellow-strong);
+    }
+
+    .site-footer {
+      padding: 34px 0;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      background: #0f0d0a;
+    }
+
+    .footer-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+
+    .footer-inner p {
+      margin-bottom: 0;
+    }
+
+    .toast {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      z-index: 50;
+      max-width: min(360px, calc(100% - 40px));
+      padding: 14px 16px;
+      border-radius: 8px;
+      color: #1c1608;
+      background: var(--yellow);
+      box-shadow: var(--shadow);
+      font-weight: 900;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+      transition: opacity .18s ease, transform .18s ease;
+    }
+
+    .toast.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 980px) {
+      .header-inner {
+        min-height: 76px;
+      }
+
+      .nav {
+        display: none;
+      }
+
+      .hero {
+        min-height: 0;
+        padding-top: 58px;
+      }
+
+      .hero-layout,
+      .join-grid {
+        grid-template-columns: 1fr;
+      }
+
+      h1 {
+        font-size: 50px;
+      }
+
+      .modes {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        width: min(100% - 28px, 1180px);
+      }
+
+      .brand {
+        font-size: 21px;
+      }
+
+      .brand-mark {
+        width: 48px;
+        height: 48px;
+      }
+
+      .hero {
+        padding-top: 44px;
+      }
+
+      h1 {
+        font-size: 40px;
+      }
+
+      .lead {
+        font-size: 18px;
+      }
+
+      .hero-actions {
+        display: grid;
+      }
+
+      .copy-btn,
+      .primary-btn,
+      .ghost-btn {
+        width: 100%;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .stats,
+      .modes {
+        grid-template-columns: 1fr;
+      }
+
+      .server-panel {
+        min-height: 0;
+        padding: 20px;
+      }
+
+      .server-name,
+      .section-title,
+      .footer-inner {
+        align-items: start;
+        flex-direction: column;
+      }
+
+      .ip-value {
+        display: grid;
+      }
+
+      .ip-value .copy-btn {
+        width: 100%;
+      }
+
+      .section {
+        padding: 56px 0;
+      }
+
+      .section-title h2 {
+        font-size: 32px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="site-header">
+      <div class="wrap header-inner">
+        <a class="brand" href="#top" aria-label="BeeHvH">
+          <svg class="brand-mark" viewBox="0 0 160 160" aria-hidden="true">
+            <rect x="0" y="0" width="160" height="160" rx="24" fill="#151310"/>
+            <g transform="translate(18 25)">
+              <path d="M33 28h45l35 20v45l-40 22H31L9 91V48z" fill="#f5ca45"/>
+              <path d="M78 28l35 20-39 22-41-22z" fill="#8b5634"/>
+              <path d="M9 48l40 21v45L9 91z" fill="#d6a82e"/>
+              <path d="M49 69l64-21v45l-40 22H49z" fill="#f1d35f"/>
+              <path d="M23 41l39 20 16-8-39-20z" fill="#ffea82"/>
+              <path d="M54 29l40 21 15-7-39-22z" fill="#5b3525"/>
+              <path d="M49 69h18v45H49zm42-14h18v45H91z" fill="#3c2a21"/>
+              <path d="M21 56h15v17H21zm86 7h17v20h-17z" fill="#171717"/>
+              <path d="M107 55l24 14v22l-24-14z" fill="#f8f8e4"/>
+              <path d="M121 73l24 14v22l-24-14z" fill="#f8f8e4"/>
+              <path d="M17 77L0 87v16l28 13 21-2V92z" fill="#1d222c"/>
+              <path d="M6 92l20 9v11L6 103z" fill="#a17925"/>
+              <path d="M0 87l17-10 14 8-16 10z" fill="#394253"/>
+            </g>
+          </svg>
+          <span>BeeHvH<small>Minecraft server</small></span>
+        </a>
+        <nav class="nav" aria-label="Главная навигация">
+          <a href="#top">Главная</a>
+          <a href="#modes">Режимы</a>
+          <a href="#join">Как зайти</a>
+          <a href="#server">Сервер</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="top">
+      <section class="hero">
+        <div class="wrap hero-layout">
+          <div>
+            <div class="eyebrow"><span class="pulse"></span> BeeHvH уже открыт</div>
+            <h1>BeeHvH<br>начало новой игры</h1>
+            <p class="lead">Заходи на Minecraft сервер с быстрыми PvP-сценариями, выживанием, аренами и понятным стартом без лишних экранов.</p>
+            <div class="hero-actions">
+              <button class="copy-btn" type="button" data-copy="mc.beehvh.xyz">
+                <span>mc.beehvh.xyz</span>
+                <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M9 9h10v10H9z" fill="none" stroke="currentColor" stroke-width="2"/>
+                  <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" fill="none" stroke="currentColor" stroke-width="2"/>
+                </svg>
+              </button>
+              <a class="ghost-btn" href="#join">Как подключиться</a>
+            </div>
+            <div class="stats" aria-label="Параметры сервера">
+              <div class="stat"><strong>1.16.5+</strong><span>рекомендуемая версия</span></div>
+              <div class="stat"><strong>PvP</strong><span>арены и дуэли</span></div>
+              <div class="stat"><strong>24/7</strong><span>проект доступен</span></div>
+            </div>
+          </div>
+
+          <aside class="server-panel" id="server" aria-label="Информация о сервере">
+            <svg class="panel-bee" viewBox="0 0 160 160" aria-hidden="true">
+              <rect x="0" y="0" width="160" height="160" rx="24" fill="#151310"/>
+              <g transform="translate(18 25)">
+                <path d="M33 28h45l35 20v45l-40 22H31L9 91V48z" fill="#f5ca45"/>
+                <path d="M78 28l35 20-39 22-41-22z" fill="#8b5634"/>
+                <path d="M9 48l40 21v45L9 91z" fill="#d6a82e"/>
+                <path d="M49 69l64-21v45l-40 22H49z" fill="#f1d35f"/>
+                <path d="M23 41l39 20 16-8-39-20z" fill="#ffea82"/>
+                <path d="M54 29l40 21 15-7-39-22z" fill="#5b3525"/>
+                <path d="M49 69h18v45H49zm42-14h18v45H91z" fill="#3c2a21"/>
+                <path d="M21 56h15v17H21zm86 7h17v20h-17z" fill="#171717"/>
+                <path d="M107 55l24 14v22l-24-14z" fill="#f8f8e4"/>
+                <path d="M121 73l24 14v22l-24-14z" fill="#f8f8e4"/>
+                <path d="M17 77L0 87v16l28 13 21-2V92z" fill="#1d222c"/>
+                <path d="M6 92l20 9v11L6 103z" fill="#a17925"/>
+                <path d="M0 87l17-10 14 8-16 10z" fill="#394253"/>
+              </g>
+            </svg>
+            <div class="server-name">
+              <div>
+                <h2>BeeHvH Network</h2>
+                <p>Наш Minecraft сервер</p>
+              </div>
+              <span class="online-badge">online</span>
+            </div>
+            <div class="ip-box">
+              <span class="ip-label">IP адрес</span>
+              <div class="ip-value">
+                <span>mc.beehvh.xyz</span>
+                <button class="copy-btn" type="button" data-copy="mc.beehvh.xyz" aria-label="Скопировать IP">
+                  <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                    <path d="M9 9h10v10H9z" fill="none" stroke="currentColor" stroke-width="2"/>
+                    <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" fill="none" stroke="currentColor" stroke-width="2"/>
+                  </svg>
+                  <span>Copy</span>
+                </button>
+              </div>
+            </div>
+            <p class="panel-note">Скопируй адрес, добавь сервер в Minecraft и заходи в лобби.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="section" id="modes">
+        <div class="wrap">
+          <div class="section-title">
+            <h2>Что есть на BeeHvH</h2>
+            <p>Короткие режимы для быстрого входа и длинной игры, когда хочется задержаться.</p>
+          </div>
+          <div class="modes">
+            <article class="mode">
+              <div class="mode-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4l6 6-9 9H5v-6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 5l6 6" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>PvP арены</h3>
+              <p>Быстрые сражения, дуэли и понятные зоны для тренировок.</p>
+            </article>
+            <article class="mode">
+              <div class="mode-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7l8-4 8 4v10l-8 4-8-4z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 7l8 4 8-4M12 11v10" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Выживание</h3>
+              <p>Развитие базы, ресурсы, кланы и свободная игра с друзьями.</p>
+            </article>
+            <article class="mode">
+              <div class="mode-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 20V6h12v14M9 9h6M9 13h6M4 20h16" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>Лобби</h3>
+              <p>Быстрый выбор режима, понятные NPC и аккуратная навигация.</p>
+            </article>
+            <article class="mode">
+              <div class="mode-icon">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1.1 6.2L12 17.3 6.4 20.2 7.5 14 3 9.6l6.2-.9z" fill="none" stroke="currentColor" stroke-width="2"/></svg>
+              </div>
+              <h3>События</h3>
+              <p>Ивенты, активности и сезонные задачи для игроков сервера.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="section join" id="join">
+        <div class="wrap join-grid">
+          <div class="notice">
+            <h2>Присоединяйся прямо сейчас</h2>
+            <p>Адрес сервера готов к копированию. Рекомендуем заходить с версии 1.16.5 или новее.</p>
+            <button class="copy-btn" type="button" data-copy="mc.beehvh.xyz">
+              <span>Скопировать IP</span>
+              <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M9 9h10v10H9z" fill="none" stroke="currentColor" stroke-width="2"/>
+                <path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1" fill="none" stroke="currentColor" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+          <div class="steps">
+            <div class="step">
+              <div>
+                <h3>Открой Minecraft</h3>
+                <p>Выбери сетевую игру в главном меню.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div>
+                <h3>Добавь сервер</h3>
+                <p>Вставь адрес mc.beehvh.xyz в поле IP.</p>
+              </div>
+            </div>
+            <div class="step">
+              <div>
+                <h3>Заходи в BeeHvH</h3>
+                <p>Выбирай режим в лобби и начинай игру.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="wrap footer-inner">
+        <p>© <span id="year"></span> BeeHvH. Все права защищены.</p>
+        <p>BeeHvH не связан с Mojang Studios и Microsoft.</p>
+      </div>
+    </footer>
+  </div>
+
+  <div class="toast" id="toast" role="status" aria-live="polite">IP скопирован</div>
+
+  <script>
+    const toast = document.getElementById("toast");
+    let toastTimer = 0;
+
+    function showToast(text) {
+      toast.textContent = text;
+      toast.classList.add("show");
+      clearTimeout(toastTimer);
+      toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    async function copyText(text) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showToast("IP скопирован: " + text);
+      } catch (error) {
+        showToast("IP: " + text);
+      }
+    }
+
+    document.querySelectorAll("[data-copy]").forEach((button) => {
+      button.addEventListener("click", () => copyText(button.dataset.copy));
+    });
+
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
