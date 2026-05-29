@@ -3,11 +3,11 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>BeeHvH - Minecraft сервер</title>
-  <meta name="description" content="BeeHvH - Minecraft сервер с PvP, выживанием, событиями и быстрым стартом для игроков.">
-  <meta name="keywords" content="BeeHvH, minecraft, minecraft сервер, pvp сервер, h vh, майнкрафт сервер">
+  <title>BeeHvH - HvH Minecraft сервер</title>
+  <meta name="description" content="BeeHvH - HvH Minecraft сервер с PvP, аренами, выживанием и быстрым стартом для игроков.">
+  <meta name="keywords" content="BeeHvH, minecraft, minecraft сервер, hvh, h vh, pvp сервер, майнкрафт сервер">
   <meta name="theme-color" content="#ffd84d">
-  <link rel="icon" type="image/svg+xml" href='data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"%3E%3Crect width="64" height="64" rx="10" fill="%23151310"/%3E%3Cpath d="M14 27h8v-7h9v7h11v-6h8v10h6v12h-8v8H24v-7H14z" fill="%23f9d84e"/%3E%3Cpath d="M22 20h9v7h-9zm20 1h8v10h-8zM24 44h24v7H24z" fill="%237b4b2b"/%3E%3Cpath d="M14 27h8v17h-8zm17 0h11v17H31z" fill="%23ffe879"/%3E%3Cpath d="M8 31h8v10H8zm36-2h8v8h-8z" fill="%23201d1a"/%3E%3Cpath d="M48 31h8v8h-8zm-6 8h8v8h-8z" fill="%23fff8cf"/%3E%3C/svg%3E'>
+  <link rel="icon" type="image/gif" href="assets/Bee_JE1.gif">
   <style>
     :root {
       color-scheme: dark;
@@ -98,7 +98,9 @@
     .brand-mark {
       width: 54px;
       height: 54px;
-      filter: drop-shadow(0 12px 20px rgba(255, 216, 77, .26));
+      filter: drop-shadow(0 12px 20px rgba(0, 0, 0, .28));
+      object-fit: contain;
+      image-rendering: pixelated;
     }
 
     .brand small {
@@ -670,24 +672,7 @@
     <header class="site-header">
       <div class="wrap header-inner">
         <a class="brand" href="#top" aria-label="BeeHvH">
-          <svg class="brand-mark" viewBox="0 0 160 160" aria-hidden="true">
-            <rect x="0" y="0" width="160" height="160" rx="24" fill="#151310"/>
-            <g transform="translate(18 25)">
-              <path d="M33 28h45l35 20v45l-40 22H31L9 91V48z" fill="#f5ca45"/>
-              <path d="M78 28l35 20-39 22-41-22z" fill="#8b5634"/>
-              <path d="M9 48l40 21v45L9 91z" fill="#d6a82e"/>
-              <path d="M49 69l64-21v45l-40 22H49z" fill="#f1d35f"/>
-              <path d="M23 41l39 20 16-8-39-20z" fill="#ffea82"/>
-              <path d="M54 29l40 21 15-7-39-22z" fill="#5b3525"/>
-              <path d="M49 69h18v45H49zm42-14h18v45H91z" fill="#3c2a21"/>
-              <path d="M21 56h15v17H21zm86 7h17v20h-17z" fill="#171717"/>
-              <path d="M107 55l24 14v22l-24-14z" fill="#f8f8e4"/>
-              <path d="M121 73l24 14v22l-24-14z" fill="#f8f8e4"/>
-              <path d="M17 77L0 87v16l28 13 21-2V92z" fill="#1d222c"/>
-              <path d="M6 92l20 9v11L6 103z" fill="#a17925"/>
-              <path d="M0 87l17-10 14 8-16 10z" fill="#394253"/>
-            </g>
-          </svg>
+          <img class="brand-mark" src="assets/Bee_JE1.gif" alt="BeeHvH bee mascot">
           <span>BeeHvH<small>Minecraft server</small></span>
         </a>
         <nav class="nav" aria-label="Главная навигация">
@@ -704,8 +689,8 @@
         <div class="wrap hero-layout">
           <div>
             <div class="eyebrow"><span class="pulse"></span> BeeHvH уже открыт</div>
-            <h1>BeeHvH<br>начало новой игры</h1>
-            <p class="lead">Заходи на Minecraft сервер с быстрыми PvP-сценариями, выживанием, аренами и понятным стартом без лишних экранов.</p>
+            <h1>BeeHvH<br>hvh ритм сервера</h1>
+            <p class="lead">Заходи на Minecraft сервер с уклоном в HvH, быстрыми PvP-сценариями, аренами, выживанием и понятным стартом без лишних экранов.</p>
             <div class="hero-actions">
               <button class="copy-btn" type="button" data-copy="mc.beehvh.xyz">
                 <span>mc.beehvh.xyz</span>
@@ -717,35 +702,18 @@
               <a class="ghost-btn" href="#join">Как подключиться</a>
             </div>
             <div class="stats" aria-label="Параметры сервера">
-              <div class="stat"><strong>1.16.5+</strong><span>рекомендуемая версия</span></div>
-              <div class="stat"><strong>PvP</strong><span>арены и дуэли</span></div>
+              <div class="stat"><strong>1.12.2 - 1.16.5</strong><span>рекомендуемая версия</span></div>
+              <div class="stat"><strong>HvH</strong><span>жесткий pvp ритм</span></div>
               <div class="stat"><strong>24/7</strong><span>проект доступен</span></div>
             </div>
           </div>
 
           <aside class="server-panel" id="server" aria-label="Информация о сервере">
-            <svg class="panel-bee" viewBox="0 0 160 160" aria-hidden="true">
-              <rect x="0" y="0" width="160" height="160" rx="24" fill="#151310"/>
-              <g transform="translate(18 25)">
-                <path d="M33 28h45l35 20v45l-40 22H31L9 91V48z" fill="#f5ca45"/>
-                <path d="M78 28l35 20-39 22-41-22z" fill="#8b5634"/>
-                <path d="M9 48l40 21v45L9 91z" fill="#d6a82e"/>
-                <path d="M49 69l64-21v45l-40 22H49z" fill="#f1d35f"/>
-                <path d="M23 41l39 20 16-8-39-20z" fill="#ffea82"/>
-                <path d="M54 29l40 21 15-7-39-22z" fill="#5b3525"/>
-                <path d="M49 69h18v45H49zm42-14h18v45H91z" fill="#3c2a21"/>
-                <path d="M21 56h15v17H21zm86 7h17v20h-17z" fill="#171717"/>
-                <path d="M107 55l24 14v22l-24-14z" fill="#f8f8e4"/>
-                <path d="M121 73l24 14v22l-24-14z" fill="#f8f8e4"/>
-                <path d="M17 77L0 87v16l28 13 21-2V92z" fill="#1d222c"/>
-                <path d="M6 92l20 9v11L6 103z" fill="#a17925"/>
-                <path d="M0 87l17-10 14 8-16 10z" fill="#394253"/>
-              </g>
-            </svg>
+            <img class="panel-bee" src="assets/Bee_JE1.gif" alt="BeeHvH bee mascot">
             <div class="server-name">
               <div>
                 <h2>BeeHvH Network</h2>
-                <p>Наш Minecraft сервер</p>
+                <p>Наш HvH Minecraft сервер</p>
               </div>
               <span class="online-badge">online</span>
             </div>
@@ -771,15 +739,15 @@
         <div class="wrap">
           <div class="section-title">
             <h2>Что есть на BeeHvH</h2>
-            <p>Короткие режимы для быстрого входа и длинной игры, когда хочется задержаться.</p>
+            <p>Короткие режимы для быстрого входа, HvH-направление и длинная игра, когда хочется задержаться.</p>
           </div>
           <div class="modes">
             <article class="mode">
               <div class="mode-icon">
                 <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 4l6 6-9 9H5v-6z" fill="none" stroke="currentColor" stroke-width="2"/><path d="M13 5l6 6" stroke="currentColor" stroke-width="2"/></svg>
               </div>
-              <h3>PvP арены</h3>
-              <p>Быстрые сражения, дуэли и понятные зоны для тренировок.</p>
+              <h3>HvH арены</h3>
+              <p>Быстрые сражения, дуэли и понятные зоны для тренировки тайминга и агрессии.</p>
             </article>
             <article class="mode">
               <div class="mode-icon">
@@ -810,7 +778,7 @@
         <div class="wrap join-grid">
           <div class="notice">
             <h2>Присоединяйся прямо сейчас</h2>
-            <p>Адрес сервера готов к копированию. Рекомендуем заходить с версии 1.16.5 или новее.</p>
+            <p>Адрес сервера готов к копированию. Рекомендуем заходить с версии 1.12.2 - 1.16.5.</p>
             <button class="copy-btn" type="button" data-copy="mc.beehvh.xyz">
               <span>Скопировать IP</span>
               <svg class="button-icon" viewBox="0 0 24 24" aria-hidden="true">
